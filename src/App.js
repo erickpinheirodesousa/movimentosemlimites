@@ -1,0 +1,257 @@
+import React, { useEffect, useState } from "react";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
+import { motion, AnimatePresence } from "framer-motion";
+
+const depoimentos = [
+  {
+    nome: "Ana Lúcia",
+    idade: 42,
+    detalhes: "cadeirante",
+    descricao: "Eu achava que nunca mais iria treinar. Com esse programa, voltei a me sentir viva!",
+    foto: "https://randomuser.me/api/portraits/women/44.jpg",
+  },
+  {
+    nome: "Felipe Ramos",
+    idade: 29,
+    detalhes: "amputado",
+    descricao: "Foi como se alguém realmente tivesse me enxergado. Tudo foi feito pra mim.",
+    foto: "https://randomuser.me/api/portraits/men/46.jpg",
+  },
+  {
+    nome: "Mariana Silva",
+    idade: 35,
+    detalhes: "com mobilidade reduzida",
+    descricao: "Os exercícios são acessíveis e transformadores. Recomendo para todos que precisam de atenção especial.",
+    foto: "https://randomuser.me/api/portraits/women/65.jpg",
+  },
+  {
+    nome: "Carlos Eduardo",
+    idade: 38,
+    detalhes: "deficiente visual",
+    descricao: "Com o suporte e a metodologia, encontrei minha independência e confiança para me exercitar.",
+    foto: "https://randomuser.me/api/portraits/men/52.jpg",
+  },
+  {
+    nome: "Jéssica Oliveira",
+    idade: 27,
+    detalhes: "com deficiência motora",
+    descricao: "Nunca pensei que atividade física pudesse ser tão inclusiva e adaptada às minhas necessidades.",
+    foto: "https://randomuser.me/api/portraits/women/68.jpg",
+  },
+  {
+    nome: "Rafael Santos",
+    idade: 33,
+    detalhes: "amputado",
+    descricao: "Recomendo para todos que buscam superar limitações com exercícios acessíveis e eficazes.",
+    foto: "https://randomuser.me/api/portraits/men/54.jpg",
+  },
+];
+
+export default function Page() {
+  useEffect(() => {
+    document.body.style.backgroundColor = "#f9fafb";
+  }, []);
+
+  const [index, setIndex] = useState(0);
+
+  function next() {
+    setIndex((prev) => (prev === depoimentos.length - 1 ? 0 : prev + 1));
+  }
+
+  function prev() {
+    setIndex((prev) => (prev === 0 ? depoimentos.length - 1 : prev - 1));
+  }
+
+  const [sliderRef] = useKeenSlider({
+    loop: true,
+    slides: {
+      perView: 1,
+      spacing: 15,
+    },
+    autoplay: {
+      delay: 2000,
+      stopOnInteraction: false,
+    },
+    created(s) {
+      setInterval(() => {
+        s.next();
+      }, 3000);
+    },
+  });
+
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-800 p-6 font-sans">
+      <header className="text-center max-w-4xl mx-auto mb-12">
+        <motion.h1
+          className="text-5xl font-bold text-green-600 mb-2"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          Movimento Sem Limites
+        </motion.h1>
+        <motion.p className="text-xl" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+          Atividades Físicas Online para Pessoas com Deficiência
+        </motion.p>
+        <motion.p className="mt-2 text-gray-600 italic" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+          A liberdade do movimento começa onde você está.
+        </motion.p>
+      </header>
+
+      <section className="max-w-4xl mx-auto mb-12">
+        <div className="w-full aspect-video mb-6 rounded-xl overflow-hidden shadow-md">
+          <iframe
+            className="w-full h-full"
+            src="https://www.youtube.com/watch?v=P_8ErLB9s-s"
+            title="Exercício adaptado"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto mb-12 flex flex-col md:flex-row items-center gap-8">
+        <div className="w-full md:w-1/2">
+          <img
+            src="https://f.i.uol.com.br/folha/ciencia/images/16109385.jpeg"
+            alt="Pessoa com prótese fazendo agachamento na academia"
+            className="rounded-xl shadow-md object-cover w-full h-64 md:h-auto"
+          />
+        </div>
+        <div className="w-full md:w-1/2">
+          <h2 className="text-3xl font-semibold mb-4">Por que este programa é diferente?</h2>
+          <ul className="list-disc pl-6 space-y-2 text-lg">
+            <li><strong>Presença:</strong> exercícios guiados com atenção plena — você no controle do seu corpo.</li>
+            <li><strong>Progressão:</strong> comece do básico e avance no seu tempo.</li>
+            <li><strong>Personalização:</strong> adaptações reais para diversos tipos de deficiência física ou motora.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section className="bg-green-100 py-8 px-6 rounded-lg max-w-4xl mx-auto mb-12 shadow-md">
+        <h2 className="text-2xl font-semibold mb-4">Desenvolvido por especialistas</h2>
+        <p>Fisioterapeutas e educadores físicos com mais de 10 anos de experiência.</p>
+        <p className="mt-2">Testado e aprovado por mais de 2.000 alunos em todo o Brasil.</p>
+      </section>
+
+      <section className="max-w-4xl mx-auto mb-12">
+        <h2 className="text-3xl font-semibold mb-6 text-center">Galeria de Inclusão</h2>
+        <div ref={sliderRef} className="keen-slider overflow-hidden rounded-lg">
+          {[
+            "https://s2-ge.glbimg.com/7kj9akRkpcogo-Ninm9upNizW-4=/0x190:3885x3024/924x0/smart/filters:strip_icc()/s.glbimg.com/es/ge/f/original/2017/10/24/20171011_161154.jpg",
+            "https://pessoascomdeficiencia.com.br/wp-content/uploads/2015/02/academia-adaptada.jpg",
+            "https://sistemasca.blob.core.windows.net/arquivos/blog/1184-2186.jpg",
+            "https://img.freepik.com/fotos-premium/homem-forte-deficiente-com-um-braco-amputado-exercitando-se-com-halteres-em-uma-academia_242111-32422.jpg?w=360",
+            "https://conteudo.imguol.com.br/c/entretenimento/74/2017/10/26/lindsay--crossfit-1509025949698_v2_450x450.png",
+            "https://st4.depositphotos.com/1017228/21234/i/450/depositphotos_212342288-stock-photo-cropped-image-amazing-strong-disabled.jpg",
+            "https://cpb.org.br/wp-content/uploads/2023/06/4687eb2c496e405e9e8f5a50eb18178d.jpg"
+          ].map((src, i) => (
+            <div key={i} className="keen-slider__slide flex justify-center items-center">
+              <img
+                src={src}
+                alt={`Pessoa praticando atividade física ${i + 1}`}
+                className="rounded-lg shadow-md object-cover"
+                style={{ width: "800px", height: "600px" }}
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto mb-12">
+        <h2 className="text-2xl font-semibold mb-6">Depoimentos reais:</h2>
+        <div className="relative bg-white p-6 rounded-lg shadow-md max-w-xl mx-auto flex flex-col items-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.5 }}
+              className="flex flex-col items-center text-center space-y-4"
+            >
+              <img src={depoimentos[index].foto} alt={depoimentos[index].nome} className="w-20 h-20 rounded-full object-cover" />
+              <p className="text-gray-700 italic text-lg">"{depoimentos[index].descricao}"</p>
+              <p className="font-semibold text-green-700">
+                {depoimentos[index].nome}, {depoimentos[index].idade} anos - {depoimentos[index].detalhes}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+
+          <button
+            onClick={prev}
+            aria-label="Depoimento anterior"
+            className="absolute top-1/2 left-0 -translate-y-1/2 p-3 rounded-full bg-green-600 text-white hover:bg-green-700 transition z-10 ml-[-1.5rem]"
+          >
+            ‹
+          </button>
+          <button
+            onClick={next}
+            aria-label="Próximo depoimento"
+            className="absolute top-1/2 right-0 -translate-y-1/2 p-3 rounded-full bg-green-600 text-white hover:bg-green-700 transition z-10 mr-[-1.5rem]"
+          >
+            ›
+          </button>
+        </div>
+      </section>
+
+      <section className="bg-green-50 py-10 px-6 rounded-lg max-w-4xl mx-auto text-center mb-12 shadow-lg">
+        <h2 className="text-3xl font-bold text-green-700 mb-4">Oferta Especial de Lançamento</h2>
+        <p className="text-xl mb-2">De <span className="line-through">R$ 147</span> por apenas <strong className="text-green-600">R$ 57,90</strong> à vista</p>
+        <p className="mb-4">ou 3x no cartão</p>
+        <a href="#formulario" className="inline-block bg-green-600 text-white px-6 py-3 rounded-xl text-lg hover:bg-green-700 transition">
+          QUERO ME MOVER SEM LIMITES
+        </a>
+        <p className="mt-4 text-sm text-gray-600">Garantia incondicional de 7 dias. Se não amar, devolvemos 100% do seu dinheiro.</p>
+      </section>
+
+      <section className="max-w-4xl mx-auto mb-12">
+        <h2 className="text-2xl font-semibold mb-4">Bônus Exclusivos:</h2>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>🧘 Sessão de relaxamento guiado (R$ 49)</li>
+          <li>📒 E-book “Alimentação para Mobilidade” (R$ 67)</li>
+          <li>👥 Acesso a grupo fechado de apoio no WhatsApp</li>
+        </ul>
+        <p className="mt-2 font-semibold">Total em bônus: R$ 116 – GRÁTIS por tempo limitado!</p>
+      </section>
+
+      <section className="bg-yellow-100 py-6 px-6 rounded-lg max-w-4xl mx-auto text-center mb-12">
+        <h2 className="text-xl font-bold text-yellow-800 mb-2">🔥 Vagas Limitadas</h2>
+        <p>Por questões de acompanhamento, só abrimos 100 novas vagas por turma.</p>
+      </section>
+
+      <section id="formulario" className="bg-white max-w-2xl mx-auto p-8 rounded-lg shadow-lg mb-16">
+        <h2 className="text-2xl font-bold mb-6 text-center">Inscreva-se Agora</h2>
+        <form action="https://formsubmit.co/erickpinheiro7cinco@gmail.com" method="POST" className="space-y-4">
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="text" name="nome" required placeholder="Seu nome" className="w-full p-3 border rounded-lg" />
+          <input type="email" name="email" required placeholder="Seu e-mail" className="w-full p-3 border rounded-lg" />
+          <input type="tel" name="whatsapp" required placeholder="Seu WhatsApp" className="w-full p-3 border rounded-lg" />
+          <button type="submit" className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700">
+            Quero Me Inscrever
+          </button>
+        </form>
+      </section>
+
+      <section className="max-w-4xl mx-auto mb-12 text-center">
+        <h2 className="text-2xl font-bold mb-4">Fale Conosco</h2>
+        <p className="mb-4">Tem dúvidas? Clique abaixo e fale com a gente no WhatsApp.</p>
+        <a
+          href="https://wa.me/5575981862191?text=Quero%20me%20movimentar%20sem%20limites"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-green-600 text-white px-6 py-3 rounded-xl text-lg hover:bg-green-700 transition"
+        >
+          Fale Conosco via WhatsApp
+        </a>
+      </section>
+
+      <footer className="text-center text-sm text-gray-500">
+        <p>&copy; {new Date().getFullYear()} Movimento Sem Limites. Todos os direitos reservados.</p>
+      </footer>
+    </div>
+  );
+}
